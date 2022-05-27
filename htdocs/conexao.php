@@ -29,3 +29,18 @@ function vai($pagina){
 			window.location = "'.$pagina.'";
 		</script>';
 }
+function CriarJogo($nome, $catagoria){
+	$sql = 'INSERT INTO jogo VALUES(null, "'.$nome.'", '.$_SESSION['cd'].', '.$categoria.' )';
+	$res = $GLOBALS['con']->query($sql);
+	if($res){
+		msg("JOGO CADASTRADO!");
+	}
+	else{
+		msg("ERRO AO CADASTRAR JOGO:(");
+	}
+} 
+function ListarJogos($usuario){
+	$sql = 'SELECT * FROM jogo WHERE id_usuario='.$usuario;
+	$res =  $GLOBALS['con']->query($sql);
+	return $res;
+}
