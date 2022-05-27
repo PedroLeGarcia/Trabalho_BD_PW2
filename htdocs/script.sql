@@ -1,5 +1,5 @@
-CREATE DATABASE projeto;
-USE projeto;
+INSERT INTO categoria (nome)
+VALUES ('ética');
 
 CREATE TABLE user (
 cd INT PRIMARY KEY AUTO_INCREMENT,
@@ -10,6 +10,7 @@ senha VARCHAR(20));
 CREATE TABLE categoria(
 cd INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45));
+
 
 
 
@@ -42,4 +43,6 @@ id_jogo INT,
 total INT,
 FOREIGN KEY (id_jogo) REFERENCES jogo(cd),
 FOREIGN KEY (id_usuario) REFERENCES user(cd));
+
+
 
