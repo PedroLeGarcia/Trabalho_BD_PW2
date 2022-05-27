@@ -40,18 +40,17 @@ Proteger();
 								<label for="nome">Nome do jogo: </label>
 							</div>
 							<div class="input-field col s3">
-								<select name="categoria">
-									<label for="categoria">Categoria: </label>
-									<option>Selecione...</option>
-									<?php 
-										$todas = ListarCategorias();
-										while($cat = $todas->fetch_object()){
-											echo '<option value="'.$cat->cd.'">';
-											echo $cat->nome;
-											echo '</option>';
-										}
-									?>
-								</select>
+								<?php
+									$todas = ListarCategorias();
+									while($cat = $todas -> fetch_object()){
+										echo '<p>
+												<label>
+												<input name="categoria" type="radio" values="'.$cat.'"/>
+												<span>'.$cat->nome.'</span>
+												</label>
+											  </p>';
+									}
+								?>
 							</div>
 							<div class="input-field col s3">
 								<input type="submit" class="btn" value="Cadastrar">
@@ -61,17 +60,28 @@ Proteger();
 				</form>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col s8 m8 offset-s2 offset-m2">
+				<h1>Meus Jogos</h1>
+				<?php
+				if(isset($_POST['nome'])){
+					$sql = 'INSERT INTO jogo (nome, id_usuario, id_categoria) VALUES ("'.$_POST['nome'].'",'.$_SESSION['cd'].','.$_POST['categoria'].')';
+					$res = $con->query($sql);
+					if($res){
+						msg("Jogo Cadastrado");
+					}else{
+						msg("Erro ao cadastrar jogo!"); 
+					}
+				}
+					$todos = ListarJogos($_SESSION['cd']);
+					while($jogo = $todos->fetch_object()){
+						echo '<a href="perguntas.php?game='.$jogo->cd.'">
+						<button class="btn">'.$jogo->nome.'</button>
+						</a>';
+					}
+				?>
+			</div>
+		</div>
 	</div>	
 </body>
 </html>
-<?php 
-if(isset($_POST['nome'])){
-	$sql = 'INSERT INTO jogo (nome, id_usuario, id_categoria) VALUES ("'.$_POST['nome'].'",'.$_SESSION['cd'].','.$_POST['categoria'].')';
-	$res = $con->query($sql);
-	if($res){
-		msg("Jogo Cadastrado");
-	}else{
-		msg("Erro ao cadastrar jogo!");
-	}
-}
-?>
